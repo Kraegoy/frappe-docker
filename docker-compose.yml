@@ -1,19 +1,4 @@
 services:
-  # nginx-proxy:
-  #   image: jwilder/nginx-proxy
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - /var/run/docker.sock:/tmp/docker.sock:ro
-  #     - ./volumes/proxy/certs:/etc/nginx/certs
-
-  # adminer:
-  #   container_name: adminer
-  #   image: adminer
-  #   environment:
-  #     - VIRTUAL_HOST=db.local
-  #     - VIRTUAL_PORT=8080
 
   redis-cache:
     image: redis:alpine
@@ -34,13 +19,12 @@ services:
       - --skip-innodb-read-only-compressed
     environment:
       MYSQL_ROOT_PASSWORD: 12345
-    # ports:
-    #   - "3305:3306"
+   
     volumes:
     - maria_db_data:/var/lib/mysql
 
-  frappe-docker: #rename this
-    image: my-frappe-image:v1.0
+  frappe-docker: 
+    image: your-image-name # rename this to the commited image name (Step 7) -- e.g. my-frappe-image:v1.0 
     container_name: frappe-docker
     tty: true
     depends_on:
