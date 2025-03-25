@@ -1,0 +1,64 @@
+services:
+  # nginx-proxy:
+  #   image: jwilder/nginx-proxy
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - /var/run/docker.sock:/tmp/docker.sock:ro
+  #     - ./volumes/proxy/certs:/etc/nginx/certs
+
+  # adminer:
+  #   container_name: adminer
+  #   image: adminer
+  #   environment:
+  #     - VIRTUAL_HOST=db.local
+  #     - VIRTUAL_PORT=8080
+
+  redis-cache:
+    image: redis:alpine
+
+  redis-queue:
+    image: redis:alpine
+
+  redis-socketio:
+    image: redis:alpine
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb:10.6
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+      - --skip-innodb-read-only-compressed
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+    # ports:
+    #   - "3305:3306"
+    volumes:
+    - maria_db_data:/var/lib/mysql
+
+  pdt-smart-erp:
+    image: xprodteam/pdt_smart_erp:basev1.0
+    container_name: pdt-smart-erp
+    tty: true
+    depends_on:
+      - mariadb
+      - redis-cache
+      - redis-queue
+      - redis-socketio
+    # environment:
+    #   - VIRTUAL_HOST=pdt-smart-erp.local
+    #   - VIRTUAL_PORT=8000
+    volumes:
+    - ./bench-version-15-base-database.sql.gz:/home/frappe/bench-version-15/bench-version-15-base-database.sql.gz:ro
+    ports:
+      - 8000:8000
+      - 9000:9000
+
+
+volumes:
+  maria_db_data:
+
+
