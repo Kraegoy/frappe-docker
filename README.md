@@ -50,7 +50,6 @@ docker exec -it frappe-docker bash
 Inside the container:
 
 ```bash
-cd ~/bench-version-15
 bench new-site <your-site-name>
 ```
 
@@ -104,7 +103,6 @@ docker-compose up -d
 
 ```bash
 docker exec -it frappe-docker bash
-cd ~/bench-version-15
 bench start
 ```
 
