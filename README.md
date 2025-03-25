@@ -11,7 +11,7 @@ This guide documents the process of setting up **Frappe with ERPNext** using Doc
 Run this in the root directory containing your Dockerfile:
 
 ```bash
-docker build -t frappe_docker .
+docker build -t <frappe_docker> .
 ```
 
 ---
