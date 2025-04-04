@@ -56,14 +56,19 @@ bench new-site <your-site-name>
 Example:
 
 ```bash
-bench new-site frappe-docker.local
+bench new-site <site-name> \
+  --mariadb-root-username root \
+  --mariadb-root-password 12345 \
+  --db-host mariadb \
+  --admin-password admin \
+  --db-name sample_db_local
 ```
 
 ---
 
 ## ✅ Step 5: Get and install ERPNext
 
-Still inside the container:
+Still inside the container (if the apps and sites are not pulled yed):
 
 ```bash
 bench get-app erpnext https://github.com/frappe/erpnext --branch version-15
@@ -74,6 +79,7 @@ bench --site frappe-docker.local install-app erpnext
 
 ## ✅ Step 6: Save the setup as a Docker image
 
+(if you want to customize the image and save the changes to be your own image)
 Exit the container and run:
 
 ```bash
