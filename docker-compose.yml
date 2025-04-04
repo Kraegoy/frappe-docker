@@ -1,5 +1,4 @@
 services:
-
   redis-cache:
     image: redis:alpine
 
@@ -19,12 +18,20 @@ services:
       - --skip-innodb-read-only-compressed
     environment:
       MYSQL_ROOT_PASSWORD: 12345
-   
     volumes:
     - maria_db_data:/var/lib/mysql
+    ports:
+    - "3306:3306" 
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
 
   frappe-docker: 
-    image: your-image-name # rename this to the commited image name (Step 7) -- e.g. my-frappe-image:v1.0 
+    image: kraegavila/frappe-custom:v.0.6
     container_name: frappe-docker
     tty: true
     depends_on:
