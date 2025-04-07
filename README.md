@@ -77,35 +77,8 @@ bench --site frappe-docker.local install-app erpnext
 
 ---
 
-## ✅ Step 6: Save the setup as a Docker image
 
-(if you want to customize the image and save the changes to be your own image)
-Exit the container and run:
-
-```bash
-docker commit frappe-docker my-frappe-image:v1.0
-```
-
----
-
-## ✅ Step 7: Use your committed image
-
-Update your `docker-compose.yml` file to use the committed image:
-
-```yaml
-image: my-frappe-image:v1.0
-```
-
-Then restart:
-
-```bash
-docker-compose down
-docker-compose up -d
-```
-
----
-
-## ✅ Step 8: Start the Frappe server
+## ✅ Step 6: Start the Frappe server
 
 ```bash
 docker exec -it frappe-docker bash
