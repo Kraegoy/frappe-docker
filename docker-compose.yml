@@ -9,7 +9,7 @@ services:
     image: redis:alpine
 
   mariadb:
-    container_name: mariadb
+    container_name: mariadb-asn_docker
     image: mariadb:10.6
     command:
       - --character-set-server=utf8mb4
@@ -18,10 +18,10 @@ services:
       - --skip-innodb-read-only-compressed
     environment:
       MYSQL_ROOT_PASSWORD: 12345
+    # ports:
+    #   - "3305:3306"
     volumes:
     - maria_db_data:/var/lib/mysql
-    ports:
-    - "3306:3306" 
 
   adminer:
     image: adminer
@@ -29,25 +29,26 @@ services:
     ports:
       - 8080:8080
 
-
-  frappe-docker: 
-    image: kraegavila/frappe-custom:v.0.6
-    container_name: frappe-docker
+  smr_asn_docker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: smr/asn_docker:v.0.1
+    container_name: asn_docker
     tty: true
     depends_on:
       - mariadb
       - redis-cache
       - redis-queue
       - redis-socketio
-    
     volumes:
-    - ./bench-version-15-base-database.sql.gz:/home/frappe/bench-version-15/bench-version-15-base-database.sql.gz:ro
+      - ./frappe-15-asn_docker.sql.gz:/home/frappe/bench-version-15/frappe-15-asn_docker.sql.gz:ro
     ports:
-      - 8000:8000
-      - 9000:9000
+      - "8000:8000" 
+      - "9000:9000" 
+    
+
 
 
 volumes:
   maria_db_data:
-
-
